@@ -1,6 +1,6 @@
 import React from 'react';
 import { App } from './App';
-import { reducer } from './state';
+import { reducer } from './states';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import storage from 'redux-persist/lib/storage';
