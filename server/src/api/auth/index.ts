@@ -6,18 +6,19 @@ import { User } from '../../database/models/User';
 
 export const login = async ({ body }: Request, response: Response) => {
   try {
-    const { email, password }: IAuth = body;
+    const { data } = body;
+    const { email, password }: IAuth = data;
 
     const user = await User.findOne({ email });
     if (!user) return response.status(404).end();
 
     const isMatch = bcrypt.compareSync(password, user.password);
-    if (!isMatch) return response.status(400);
+    if (!isMatch) return response.status(400).end();
 
     const token = signSync(user.id);
 
-    return response.status(200).json({ token, user });
+    return response.status(200).json({ token, user }).end();
   } catch ({ message }) {
-    return response.status(500).json({ error: message });
+    return response.status(500).json({ error: message }).end();
   }
 };
